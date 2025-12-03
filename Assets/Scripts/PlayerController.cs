@@ -2,7 +2,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f; 
+    public float moveSpeed = 5f;
+    
+    private Rigidbody2D rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        
+        if (rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody2D>();
+            rb.freezeRotation = true;
+        }
+    }
 
     void Update()
     {
@@ -11,6 +24,6 @@ public class PlayerController : MonoBehaviour
 
         Vector2 moveDir = new Vector2(moveX, moveY).normalized;
         
-        transform.Translate(moveDir * moveSpeed * Time.deltaTime);
+        rb.velocity = moveDir * moveSpeed;
     }
 }
